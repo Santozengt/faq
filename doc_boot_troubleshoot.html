@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>常见问题解答(FAQ):设备无法开机/无法点亮(内存与硬盘排查指南)</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; background-color: #f5f7fa; color: #333; line-height: 1.6; }
+        
+        /* 面包屑导航 */
+        .breadcrumb { max-width: 1200px; margin: 20px auto 0; padding: 0 20px; font-size: 0.9rem; color: #6b7280; }
+        .breadcrumb a { color: #2563eb; text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
+
+        /* 主体布局 */
+        .main-wrapper { max-width: 1200px; margin: 20px auto 60px; padding: 0 20px; display: flex; gap: 30px; }
+        
+        /* 左侧侧边栏目录 */
+        .sidebar { width: 280px; background: white; border: 1px solid #e5e7eb; border-radius: 4px; padding: 20px; height: fit-content; position: sticky; top: 20px; }
+        .sidebar h4 { font-size: 1rem; margin-bottom: 15px; color: #111827; border-bottom: 1px solid #f3f4f6; padding-bottom: 8px; }
+        .sidebar ul { list-style: none; }
+        .sidebar li { margin-bottom: 10px; }
+        .sidebar a { display: block; color: #4b5563; text-decoration: none; font-size: 0.9rem; padding: 6px 10px; border-radius: 4px; }
+        .sidebar a:hover, .sidebar .active { background-color: #f3f4f6; color: #c7000b; font-weight: 500; }
+
+        /* 中间核心内容区 */
+        .content-area { flex: 1; background: white; border: 1px solid #e5e7eb; border-radius: 4px; padding: 40px; }
+        
+        /* 文章头部标题 */
+        .doc-header { border-bottom: 1px solid #e5e7eb; padding-bottom: 20px; margin-bottom: 30px; }
+        .doc-header h1 { font-size: 1.75rem; color: #111827; margin-bottom: 10px; }
+        .doc-meta { font-size: 0.85rem; color: #9ca3af; }
+        .doc-meta span { margin-right: 20px; }
+
+        /* 文章正文样式定义 */
+        .faq-block { margin-bottom: 35px; }
+        .faq-block h2 { font-size: 1.25rem; color: #1f2937; margin-bottom: 12px; display: flex; align-items: center; }
+        .faq-answer { font-size: 1rem; color: #374151; padding-left: 4px; }
+        .faq-answer ol, .faq-answer ul { padding-left: 20px; margin-top: 10px; }
+        .faq-answer li { margin-bottom: 8px; }
+
+        /* 交叉验证表格样式 */
+        .faq-table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 0.95rem; }
+        .faq-table th, .faq-table td { border: 1px solid #e5e7eb; padding: 12px; text-align: left; }
+        .faq-table th { background-color: #f9fafb; color: #1f2937; font-weight: 600; }
+        .faq-table tr:nth-child(even) { background-color: #fbfbfe; }
+
+        /* 警示框与提示框 */
+        .danger-box { background-color: #fef2f2; border-left: 4px solid #ef4444; color: #991b1b; padding: 15px; margin: 15px 0; border-radius: 0 4px 4px 0; font-size: 0.95rem; }
+        .tip-box { background-color: #f0fdf4; border-left: 4px solid #22c55e; color: #166534; padding: 15px; margin: 25px 0 0 0; border-radius: 0 4px 4px 0; font-size: 0.95rem; }
+
+        /* 响应式适配 */
+        @media (max-width: 768px) {
+            .main-wrapper { flex-direction: column; }
+            .sidebar { width: 100%; position: relative; top: 0; }
+            .content-area { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="breadcrumb">
+        <a href="index.html">首页</a> &gt; <a href="index.html">迷你电脑常见问题FAQ</a> &gt; <span>无法开机/无法点亮排查</span>
+    </div>
+
+    <div class="main-wrapper">
+        
+        <aside class="sidebar">
+            <h4>本文目录</h4>
+            <ul>
+                <li><a href="#q1" class="active">Q1 常见现象及成因</a></li>
+                <li><a href="#q2">Q2 硬重置与基础清理</a></li>
+                <li><a href="#q3">Q3 内存交叉验证测试</a></li>
+                <li><a href="#q4">Q4 初始化与逐级安装</a></li>
+            </ul>
+        </aside>
+
+        <main class="content-area">
+            <article>
+                <div class="doc-header">
+                    <h1>设备无法开机/无法点亮(内存与硬盘排查指南)</h1>
+                    <div class="doc-meta">
+                        <span>发布时间：2026-05-18</span>
+                        <span>文档级别：公开</span>
+                        <span>适用机型：全系列标准主机设备</span>
+                    </div>
+                </div>
+
+                <div class="faq-block" id="q1">
+                    <h2>Q1: 设备无法开机或黑屏，通常是由什么原因引起的？</h2>
+                    <div class="faq-answer">
+                        <p>当您的设备出现无法开机、黑屏或指示灯亮起但屏幕无显示等情况时,通常与内部硬件(如内存、固态硬盘)的接触或初始化有关。请按照以下官方推荐的步骤进行排查：</p>
+                    </div>
+                </div>
+
+                <div class="faq-block" id="q2">
+                    <h2>Q2: 如何进行基础的硬重置与硬件清理？</h2>
+                    <div class="faq-answer">
+                        <p>请严格按照以下<strong>第一步：硬重置与基础清理</strong>流程操作：</p>
+                        <ol>
+                            <li><strong>彻底断电：</strong>断开主机的电源适配器,并拔掉所有外接设备(如鼠标、键盘、显示器、U盘等)。</li>
+                            <li><strong>释放残余电量：</strong>长按主机电源键30秒不松开,以清除主板及电容内的残余静电。</li>
+                            <li><strong>清洁与最小化硬件：</strong>
+                                <ul>
+                                    <li>拆开机壳,取出内存条(DDR)与固态硬盘(SSD)。</li>
+                                    <li>使用干净的纸巾或无纺布,轻轻擦拭内存条的金手指(金属触点)。</li>
+                                    <li>如果条件允许,使用压缩空气吹扫主板上的内存插槽,清理可能存在的灰尘。</li>
+                                </ul>
+                            </li>
+                        </ol>
+                        <div class="danger-box">
+                            <strong>⚠️ 注意：</strong>此时先不要安装SSD。
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-block" id="q3">
+                    <h2>Q3: 怎样定位是特定内存损坏还是插槽故障？</h2>
+                    <div class="faq-answer">
+                        <p>为了排除是特定内存条损坏还是某个内存插槽故障,请按照以下<strong>第二步：内存交叉验证测试（核心排查）</strong>步骤进行单条内存测试：</p>
+                        
+                        <div class="danger-box">
+                            <strong>⚠️ 警告：</strong>每次更换插槽或内存条前,请确保设备处于断电状态。
+                        </div>
+
+                        <table class="faq-table">
+                            <thead>
+                                <tr>
+                                    <th>测试轮次</th>
+                                    <th>插入插槽</th>
+                                    <th>使用内存条</th>
+                                    <th>预期结果与排查目的</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>第一轮</strong></td>
+                                    <td>仅插入A槽</td>
+                                    <td>1号内存</td>
+                                    <td>测试A槽与1号内存是否完好</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>第二轮</strong></td>
+                                    <td>仅插入B槽</td>
+                                    <td>1号内存</td>
+                                    <td>若第一轮失败,此步可验证是否为A槽故障</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>第三轮</strong></td>
+                                    <td>仅插入A槽</td>
+                                    <td>2号内存</td>
+                                    <td>更换内存源,测试2号内存是否完好</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>第四轮</strong></td>
+                                    <td>仅插入B槽</td>
+                                    <td>2号内存</td>
+                                    <td>验证B槽与2号内存的组合</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="faq-block" id="q4">
+                    <h2>Q4: 硬件清理和验证后，该如何正确安装与开机？</h2>
+                    <div class="faq-answer">
+                        <p>由于部分机型在硬件变动后需要重新识别硬件信息,请严格按照以下<strong>第三步：单条内存初始化与逐级安装</strong>顺序开机：</p>
+                        <ol>
+                            <li><strong>单条开机：</strong>仅插入单条内存,接通电源并开机。</li>
+                            <li><strong>耐心等待：</strong>首次开机可能需要较长时间,请务必耐心等待1至3分钟。在此期间请勿强制关机。</li>
+                            <li><strong>逐级添加：</strong>
+                                <ul>
+                                    <li>成功点亮并进入系统(BIOS)后,说明硬件识别成功。</li>
+                                    <li>此时将设备正常关机并断电,插入第二条内存,再次开机测试。</li>
+                                    <li>确认双通道内存均正常识别后,最后关机安装SSD(固态硬盘)。</li>
+                                </ul>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="faq-block" id="unresolved-doc" style="border-top: 1px dashed #e5e7eb; padding-top: 20px;">
+                    <h2>仍未解决？</h2>
+                    <div class="faq-answer">
+                        <p>如果您完整执行了以上步骤,设备依然无法点亮,可能是其他核心部件异常。请联系我们的官方技术支持团队,并提供您的产品序列号(S/N码),我们将为您安排进一步的检测或售后服务。</p>
+                    </div>
+                </div>
+
+                <div class="tip-box">
+                    <strong>💡 补充说明：</strong>如果硬件在第一次插入时未能点亮,可能是由于安装角度或接触不到位。请尝试多次拔插内存条,确保其完全卡入槽位中。
+                </div>
+
+            </article>
+        </main>
+    </div>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    const id = entry.target.getAttribute('id');
+                    const link = document.querySelector(`.sidebar a[href="#${id}"]`);
+                    if (link && entry.intersectionRatio > 0) {
+                        document.querySelectorAll('.sidebar a').forEach(a => a.classList.remove('active'));
+                        link.classList.add('active');
+                    }
+                });
+            });
+            document.querySelectorAll('.faq-block').forEach(section => observer.observe(section));
+        });
+    </script>
+</body>
+</html>
