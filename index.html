@@ -6,113 +6,936 @@
     <title>服务支持 - 知识库服务中心</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; background-color: #f5f7fa; color: #333; }
-        
-        /* 顶部通栏 - 去除搜索，降低高度，内容左对齐 */
-        .search-banner { 
-            background: linear-gradient(135deg, #1f2937, #111827); 
-            color: white; 
-            padding: 20px 40px; /* 降低上下高度，增加左右留白 */
-            text-align: left; /* 知识库往左上角放 */
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; background-color: #f0f4f8; color: #2d3748; }
+
+        .search-banner {
+            background: linear-gradient(135deg, #1e3a5f, #2c5282);
+            color: white;
+            padding: 20px 40px;
+            box-shadow: 0 4px 12px rgba(30, 58, 95, 0.3);
         }
-        .search-banner h1 { 
-            font-size: 1.8rem; 
-            font-weight: 500; 
-        } 
-        
-        /* 主体内容布局 */
-        .container { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
-        .section-title { font-size: 1.5rem; margin-bottom: 20px; color: #111827; border-left: 4px solid #c7000b; padding-left: 10px; }
-        
-        /* 分类网格 */
-        .category-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 25px; margin-bottom: 40px; }
-        .category-card { background: white; border: 1px solid #e5e7eb; border-radius: 4px; padding: 24px; transition: box-shadow 0.2s; }
-        .category-card:hover { box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05); }
-        .category-card h3 { font-size: 1.2rem; margin-bottom: 15px; color: #1f2937; border-bottom: 1px solid #f3f4f6; padding-bottom: 10px; }
-        
-        /* 文档列表链接 */
-        .doc-list { list-style: none; }
-        .doc-list li { margin-bottom: 12px; }
-        .doc-list a { color: #2563eb; text-decoration: none; font-size: 0.95rem; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .doc-list a:hover { color: #c7000b; text-decoration: underline; }
+        .search-banner .banner-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .search-banner h1 {
+            font-size: 1.8rem;
+            font-weight: 500;
+        }
+
+        .search-container {
+            position: relative;
+            width: 320px;
+        }
+        .search-input {
+            width: 100%;
+            padding: 10px 36px 10px 16px;
+            border: none;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            font-size: 0.9rem;
+            outline: none;
+            transition: all 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .search-input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+        .search-input:focus {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 0 3px rgba(99, 179, 233, 0.3);
+        }
+        .search-icon {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.85rem;
+            opacity: 0.6;
+            line-height: 1;
+        }
+
+        .breadcrumb {
+            max-width: 1400px;
+            margin: 15px auto 0;
+            padding: 0 20px;
+            font-size: 0.85rem;
+            color: #718096;
+        }
+        .breadcrumb a {
+            color: #4299e1;
+            text-decoration: none;
+        }
+        .breadcrumb a:hover {
+            text-decoration: underline;
+            color: #2b6cb0;
+        }
+        .breadcrumb span {
+            margin: 0 8px;
+            color: #cbd5e0;
+        }
+
+        .main-wrapper {
+            max-width: 1400px;
+            margin: 20px auto 60px;
+            padding: 0 20px;
+            display: flex;
+            gap: 24px;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, #2c5282, #3182ce);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(44, 82, 130, 0.4);
+            z-index: 1000;
+            transition: all 0.3s;
+        }
+        .mobile-menu-btn:active {
+            transform: scale(0.95);
+        }
+        .mobile-menu-btn:hover {
+            box-shadow: 0 6px 16px rgba(44, 82, 130, 0.5);
+        }
+
+        .sidebar {
+            width: 280px;
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 20px;
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+        .sidebar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #edf2f7;
+        }
+        .sidebar h3 {
+            font-size: 1rem;
+            color: #1a202c;
+            font-weight: 600;
+        }
+        .sidebar-stats {
+            font-size: 0.75rem;
+            color: #a0aec0;
+            background: #f7fafc;
+            padding: 3px 8px;
+            border-radius: 4px;
+        }
+        .sidebar ul { list-style: none; }
+        .sidebar li { margin-bottom: 2px; }
+
+        .category-item {
+            margin-bottom: 4px;
+        }
+        .category-header {
+            font-weight: 500;
+            color: #2d3748;
+            cursor: pointer;
+            padding: 11px 14px;
+            border-radius: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.25s ease;
+            user-select: none;
+        }
+        .category-header:hover {
+            background-color: #ebf8ff;
+        }
+        .category-header.active {
+            background-color: #ebf8ff;
+            color: #2b6cb0;
+            border-left: 3px solid #3182ce;
+        }
+        .category-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .category-arrow {
+            font-size: 0.7rem;
+            transition: transform 0.3s ease;
+            color: #a0aec0;
+        }
+        .category-header.active .category-arrow {
+            transform: rotate(180deg);
+            color: #3182ce;
+        }
+        .category-count {
+            font-size: 0.7rem;
+            background: #e2e8f0;
+            color: #718096;
+            padding: 2px 7px;
+            border-radius: 4px;
+            margin-left: 6px;
+        }
+        .category-header.active .category-count {
+            background: #90cdf4;
+            color: #2b6cb0;
+        }
+
+        .sub-items {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.35s ease, opacity 0.25s ease;
+            opacity: 0;
+            padding-left: 16px;
+        }
+        .sub-items.show {
+            max-height: 500px;
+            opacity: 1;
+        }
+        .sub-items a {
+            display: flex;
+            align-items: center;
+            color: #4a5568;
+            text-decoration: none;
+            font-size: 0.85rem;
+            padding: 8px 14px;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+        .sub-items a:hover {
+            background-color: #f7fafc;
+            color: #2b6cb0;
+            padding-left: 18px;
+        }
+        .sub-items a::before {
+            content: '';
+            width: 4px;
+            height: 4px;
+            background: #cbd5e0;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .sub-items a:hover::before {
+            background: #3182ce;
+        }
+
+        .content-area {
+            flex: 1;
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 30px;
+            min-height: 500px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+        .content-header {
+            border-bottom: 1px solid #edf2f7;
+            padding-bottom: 20px;
+            margin-bottom: 25px;
+        }
+        .content-header h2 {
+            font-size: 1.5rem;
+            color: #1a202c;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        .content-header p {
+            color: #718096;
+            font-size: 0.9rem;
+        }
+
+        .doc-item {
+            padding: 20px 22px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            margin-bottom: 14px;
+            transition: all 0.25s ease;
+            position: relative;
+            overflow: hidden;
+            background: white;
+        }
+        .doc-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: transparent;
+            transition: background 0.25s;
+        }
+        .doc-item:hover {
+            border-color: #90cdf4;
+            box-shadow: 0 4px 16px rgba(49, 130, 206, 0.1);
+            transform: translateY(-1px);
+        }
+        .doc-item:hover::before {
+            background: #3182ce;
+        }
+        .doc-item h4 {
+            font-size: 1rem;
+            color: #2d3748;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        .doc-item h4 a {
+            color: #2b6cb0;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .doc-item h4 a:hover {
+            color: #1a4365;
+        }
+        .doc-item p {
+            font-size: 0.85rem;
+            color: #718096;
+            margin-top: 6px;
+        }
+        .doc-item .doc-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            margin-top: 10px;
+            color: #3182ce;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        .doc-item .doc-link:hover {
+            text-decoration: underline;
+            color: #2b6cb0;
+        }
+
+        .doc-item.empty {
+            background: #fafbfc;
+            border-style: dashed;
+            border-color: #e2e8f0;
+        }
+        .doc-item.empty h4 {
+            color: #a0aec0;
+        }
+        .doc-item.empty p {
+            color: #cbd5e0;
+        }
+        .doc-item.empty .doc-link {
+            color: #a0aec0;
+            pointer-events: none;
+        }
+
+        .doc-item.search-highlight {
+            background: #fffaf0;
+            border-color: #fbd38d;
+        }
+        .search-highlight h4 a {
+            background: #fef5e7;
+            padding: 0 4px;
+            border-radius: 2px;
+        }
+
+        .stats-bar {
+            background: linear-gradient(135deg, #f7fafc, #edf2f7);
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 22px 25px;
+            margin-bottom: 25px;
+            display: flex;
+            gap: 40px;
+            align-items: center;
+            justify-content: space-around;
+        }
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .stat-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .stat-number {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #2d3748;
+        }
+        .stat-label {
+            font-size: 0.85rem;
+            color: #718096;
+        }
+
+        @media (max-width: 768px) {
+            .search-banner {
+                padding: 15px 20px;
+            }
+            .search-banner .banner-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .search-container {
+                width: 100%;
+            }
+            .breadcrumb {
+                display: none;
+            }
+            .main-wrapper {
+                flex-direction: column;
+                padding: 0 15px;
+                margin-bottom: 80px;
+            }
+            .mobile-menu-btn {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .sidebar {
+                width: 100%;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                z-index: 999;
+                border-radius: 0;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+                overflow-y: auto;
+                padding-top: 60px;
+            }
+            .sidebar.show {
+                transform: translateX(0);
+            }
+            .sidebar-overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 998;
+            }
+            .sidebar-overlay.show {
+                display: block;
+            }
+            .sidebar-close {
+                display: block;
+                position: absolute;
+                top: 15px;
+                right: 15px;
+                width: 36px;
+                height: 36px;
+                background: #f7fafc;
+                border: 1px solid #e2e8f0;
+                border-radius: 6px;
+                font-size: 1rem;
+                cursor: pointer;
+                color: #718096;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .sidebar-close:hover {
+                background: #edf2f7;
+            }
+            .content-area {
+                padding: 20px;
+            }
+            .stats-bar {
+                flex-wrap: wrap;
+                gap: 15px;
+                padding: 15px;
+            }
+            .stat-item {
+                flex: 1 1 45%;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .sidebar-close {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body>
 
     <div class="search-banner">
-        <h1>知识库</h1>
-    </div>
-
-    <div class="container">
-        <h2 class="section-title">迷你电脑常见问题FAQ</h2>
-        
-        <div class="category-grid">
-            <div class="category-card">
-                <h3>系统备份与还原</h3>
-                <ul class="doc-list">
-                    <li><a href="#">📄 [预留空文档] </a></li>
-                    <li><a href="#">📄 [预留空文档] </a></li>
-                </ul>
-            </div>
-
-            <div class="category-card">
-                <h3>风扇问题</h3>
-                <ul class="doc-list">
-                    <li><a href="doc_fan_noise.html">📄 双风扇系列设备风扇异响排查指南</a></li>
-                    <li><a href="#" style="color:#9ca3af; pointer-events:none;">📄 [空文档占位] 清灰与日常维护说明</a></li>
-                </ul>
-            </div>
-
-            <div class="category-card">
-                <h3>驱动程序</h3>
-                <ul class="doc-list">
-                    <li><a href="#">📄 BIOS 常见设置与更新升级指南</a></li>
-                    <li><a href="#">📄 Windows 操作系统常见故障与蓝屏排查</a></li>
-                    <li><a href="#" style="color:#9ca3af; pointer-events:none;">📄 [预留空文档] </a></li>
-                </ul>
-            </div>
-
-            <div class="category-card">
-                <h3>BIOS</h3>
-                <ul class="doc-list">
-                    <li><a href="#">📄 [预留空文档] </a></li>
-                    <li><a href="#">📄 [预留空文档] 
-                    </a></li>
-                </ul>
-            </div>
-
-            <div class="category-card">
-                <h3>无法开机与系统异常相关问题</h3>
-                <ul class="doc-list">
-                    <li><a href="doc_boot_troubleshoot.html#q1">📄 设备无法开机/无法点亮(内存与硬盘排查指南)</a></li>
-                </ul>
-            </div>
-
-            <div class="category-card">
-                <h3>外设/硬件/部件</h3>
-                <ul class="doc-list">
-                    <li><a href="doc_power_adapter.html">📄 电源适配器常见故障表现与供电排查</a></li>
-                    <li><a href="doc_audio_troubleshoot.html">📄 耳机/声音设备无法正常工作排查指南</a></li>
-                </ul>
-            </div>
-
-            <div class="category-card">
-                <h3>无线 / 有线网络与蓝牙</h3>
-                <ul class="doc-list">
-                    <li><a href="#">📄 [预留空文档] </a></li>
-                    <li><a href="#">📄 [预留空文档] </a></li>
-                </ul>
-            </div>
-
-            <div class="category-card">
-                <h3>产品政策与维修服务</h3>
-                <ul class="doc-list">
-                    <li><a href="#">📄 售后维修、退换货申请流程及须知</a></li>
-                    <li><a href="#">📄 官方保修服务政策与限定范围说明</a></li>
-                </ul>
+        <div class="banner-content">
+            <h1>知识库</h1>
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="搜索文档..." id="searchInput">
+                <span class="search-icon">Search</span>
             </div>
         </div>
     </div>
+
+    <div class="breadcrumb">
+        <a href="index.html">首页</a>
+        <span>&rsaquo;</span>
+        <a href="#">问题分类</a>
+    </div>
+
+    <div class="main-wrapper">
+
+        <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleMobileMenu()"></div>
+
+        <aside class="sidebar" id="sidebar">
+            <button class="sidebar-close" onclick="toggleMobileMenu()">&#x2715;</button>
+            <div class="sidebar-header">
+                <h3>问题分类</h3>
+                <span class="sidebar-stats">共 8 个分类</span>
+            </div>
+            <ul>
+                <li class="category-item">
+                    <div class="category-header active" data-category="系统备份与还原">
+                        <span class="category-title">系统备份与还原</span>
+                        <div>
+                            <span class="category-count">2</span>
+                            <span class="category-arrow">&#x25BC;</span>
+                        </div>
+                    </div>
+                    <div class="sub-items show">
+                        <a href="#" target="_blank">BIOS 常见设置与更新升级指南</a>
+                        <a href="#" target="_blank">Windows 操作系统常见故障与蓝屏排查</a>
+                    </div>
+                </li>
+                <li class="category-item">
+                    <div class="category-header" data-category="风扇问题">
+                        <span class="category-title">风扇问题</span>
+                        <div>
+                            <span class="category-count">2</span>
+                            <span class="category-arrow">&#x25BC;</span>
+                        </div>
+                    </div>
+                    <div class="sub-items">
+                        <a href="doc_fan_noise.html" target="_blank">双风扇系列设备风扇异响排查指南</a>
+                        <a href="#" target="_blank">清灰与日常维护说明</a>
+                    </div>
+                </li>
+                <li class="category-item">
+                    <div class="category-header" data-category="驱动程序">
+                        <span class="category-title">驱动程序</span>
+                        <div>
+                            <span class="category-count">3</span>
+                            <span class="category-arrow">&#x25BC;</span>
+                        </div>
+                    </div>
+                    <div class="sub-items">
+                        <a href="#" target="_blank">BIOS 常见设置与更新升级指南</a>
+                        <a href="#" target="_blank">Windows 操作系统常见故障与蓝屏排查</a>
+                        <a href="#" target="_blank">显卡驱动安装与更新指南</a>
+                    </div>
+                </li>
+                <li class="category-item">
+                    <div class="category-header" data-category="BIOS">
+                        <span class="category-title">BIOS</span>
+                        <div>
+                            <span class="category-count">2</span>
+                            <span class="category-arrow">&#x25BC;</span>
+                        </div>
+                    </div>
+                    <div class="sub-items">
+                        <a href="#" target="_blank">BIOS 设置详解与优化建议</a>
+                        <a href="#" target="_blank">BIOS 升级失败处理方法</a>
+                    </div>
+                </li>
+                <li class="category-item">
+                    <div class="category-header" data-category="无法开机与系统异常">
+                        <span class="category-title">无法开机与系统异常</span>
+                        <div>
+                            <span class="category-count">1</span>
+                            <span class="category-arrow">&#x25BC;</span>
+                        </div>
+                    </div>
+                    <div class="sub-items">
+                        <a href="doc_boot_troubleshoot.html" target="_blank">设备无法开机/无法点亮(内存与硬盘排查指南)</a>
+                    </div>
+                </li>
+                <li class="category-item">
+                    <div class="category-header" data-category="外设/硬件/部件">
+                        <span class="category-title">外设/硬件/部件</span>
+                        <div>
+                            <span class="category-count">3</span>
+                            <span class="category-arrow">&#x25BC;</span>
+                        </div>
+                    </div>
+                    <div class="sub-items">
+                        <a href="doc_audio_troubleshoot.html" target="_blank">耳机/声音设备无法正常工作排查指南</a>
+                        <a href="#" target="_blank">USB 设备识别异常处理</a>
+                        <a href="#" target="_blank">显示器连接问题排查</a>
+                    </div>
+                </li>
+                <li class="category-item">
+                    <div class="category-header" data-category="网络与蓝牙">
+                        <span class="category-title">网络与蓝牙</span>
+                        <div>
+                            <span class="category-count">3</span>
+                            <span class="category-arrow">&#x25BC;</span>
+                        </div>
+                    </div>
+                    <div class="sub-items">
+                        <a href="#" target="_blank">无线网络连接不稳定解决方案</a>
+                        <a href="#" target="_blank">蓝牙设备配对失败处理</a>
+                        <a href="#" target="_blank">有线网络无法连接排查</a>
+                    </div>
+                </li>
+                <li class="category-item">
+                    <div class="category-header" data-category="产品政策与维修服务">
+                        <span class="category-title">产品政策与维修服务</span>
+                        <div>
+                            <span class="category-count">2</span>
+                            <span class="category-arrow">&#x25BC;</span>
+                        </div>
+                    </div>
+                    <div class="sub-items">
+                        <a href="#" target="_blank">售后维修、退换货申请流程及须知</a>
+                        <a href="#" target="_blank">官方保修服务政策与限定范围说明</a>
+                    </div>
+                </li>
+            </ul>
+        </aside>
+
+        <main class="content-area" id="contentArea">
+            <div class="stats-bar">
+                <div class="stat-item">
+                    <div class="stat-info">
+                        <span class="stat-number">8</span>
+                        <span class="stat-label">问题分类</span>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-info">
+                        <span class="stat-number">18</span>
+                        <span class="stat-label">篇文档</span>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-info">
+                        <span class="stat-number">3</span>
+                        <span class="stat-label">篇已完善</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-header">
+                <h2 id="contentTitle">系统备份与还原</h2>
+                <p id="contentDesc">共 <span id="docCount">2</span> 篇文档</p>
+            </div>
+
+            <div class="doc-item empty">
+                <h4>BIOS 常见设置与更新升级指南</h4>
+                <p>本文档正在准备中...</p>
+                <a href="#" class="doc-link">查看文档</a>
+            </div>
+
+            <div class="doc-item empty">
+                <h4>Windows 操作系统常见故障与蓝屏排查</h4>
+                <p>本文档正在准备中...</p>
+                <a href="#" class="doc-link">查看文档</a>
+            </div>
+        </main>
+
+        <button class="mobile-menu-btn" onclick="toggleMobileMenu()">&#x2261;</button>
+    </div>
+
+    <script>
+        const categoryData = {
+            '系统备份与还原': {
+                docs: [
+                    { title: 'BIOS 常见设置与更新升级指南', link: '#', empty: true },
+                    { title: 'Windows 操作系统常见故障与蓝屏排查', link: '#', empty: true }
+                ]
+            },
+            '风扇问题': {
+                docs: [
+                    { title: '双风扇系列设备风扇异响排查指南', link: 'doc_fan_noise.html', empty: false },
+                    { title: '清灰与日常维护说明', link: '#', empty: true }
+                ]
+            },
+            '驱动程序': {
+                docs: [
+                    { title: 'BIOS 常见设置与更新升级指南', link: '#', empty: true },
+                    { title: 'Windows 操作系统常见故障与蓝屏排查', link: '#', empty: true },
+                    { title: '显卡驱动安装与更新指南', link: '#', empty: true }
+                ]
+            },
+            'BIOS': {
+                docs: [
+                    { title: 'BIOS 设置详解与优化建议', link: '#', empty: true },
+                    { title: 'BIOS 升级失败处理方法', link: '#', empty: true }
+                ]
+            },
+            '无法开机与系统异常': {
+                docs: [
+                    { title: '设备无法开机/无法点亮(内存与硬盘排查指南)', link: 'doc_boot_troubleshoot.html', empty: false }
+                ]
+            },
+            '外设/硬件/部件': {
+                docs: [
+                    { title: '耳机/声音设备无法正常工作排查指南', link: 'doc_audio_troubleshoot.html', empty: false },
+                    { title: 'USB 设备识别异常处理', link: '#', empty: true },
+                    { title: '显示器连接问题排查', link: '#', empty: true }
+                ]
+            },
+            '网络与蓝牙': {
+                docs: [
+                    { title: '无线网络连接不稳定解决方案', link: '#', empty: true },
+                    { title: '蓝牙设备配对失败处理', link: '#', empty: true },
+                    { title: '有线网络无法连接排查', link: '#', empty: true }
+                ]
+            },
+            '产品政策与维修服务': {
+                docs: [
+                    { title: '售后维修、退换货申请流程及须知', link: '#', empty: true },
+                    { title: '官方保修服务政策与限定范围说明', link: '#', empty: true }
+                ]
+            }
+        };
+
+        let currentCategory = '系统备份与还原';
+
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.category-header').forEach(header => {
+                header.addEventListener('click', function() {
+                    const category = this.getAttribute('data-category');
+                    const subItems = this.nextElementSibling;
+
+                    document.querySelectorAll('.sub-items').forEach(s => {
+                        s.classList.remove('show');
+                    });
+
+                    document.querySelectorAll('.category-header').forEach(h => {
+                        h.classList.remove('active');
+                    });
+
+                    subItems.classList.add('show');
+                    this.classList.add('active');
+
+                    if (category && categoryData[category]) {
+                        currentCategory = category;
+                        updateContent(category);
+                    }
+
+                    if (window.innerWidth <= 768) {
+                        closeMobileMenu();
+                    }
+                });
+            });
+
+            document.getElementById('searchInput').addEventListener('input', function(e) {
+                const searchTerm = e.target.value.trim().toLowerCase();
+
+                if (searchTerm === '') {
+                    updateContent(currentCategory);
+                    return;
+                }
+
+                let results = [];
+                for (const [category, data] of Object.entries(categoryData)) {
+                    data.docs.forEach(doc => {
+                        if (doc.title.toLowerCase().includes(searchTerm)) {
+                            results.push({
+                                category: category,
+                                ...doc
+                            });
+                        }
+                    });
+                }
+
+                displaySearchResults(results);
+            });
+
+            document.querySelectorAll('.sub-items a').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                });
+            });
+        });
+
+        function updateContent(category) {
+            const data = categoryData[category];
+            if (!data) return;
+
+            document.getElementById('contentTitle').textContent = category;
+
+            const docHtml = data.docs.map((doc, index) => {
+                if (doc.empty) {
+                    return `
+                        <div class="doc-item empty" data-title="${doc.title}">
+                            <h4>${doc.title}</h4>
+                            <p>本文档正在准备中...</p>
+                            <a href="${doc.link}" class="doc-link">查看文档</a>
+                        </div>
+                    `;
+                } else {
+                    return `
+                        <div class="doc-item" data-title="${doc.title}">
+                            <h4><a href="${doc.link}" target="_blank">${doc.title}</a></h4>
+                            <p>点击查看完整文档内容</p>
+                            <a href="${doc.link}" target="_blank" class="doc-link">查看文档</a>
+                        </div>
+                    `;
+                }
+            }).join('');
+
+            document.getElementById('contentArea').innerHTML = `
+                <div class="stats-bar">
+                    <div class="stat-item">
+                        <div class="stat-info">
+                            <span class="stat-number">8</span>
+                            <span class="stat-label">问题分类</span>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-info">
+                            <span class="stat-number">18</span>
+                            <span class="stat-label">篇文档</span>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-info">
+                            <span class="stat-number">3</span>
+                            <span class="stat-label">篇已完善</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="content-header">
+                    <h2>${category}</h2>
+                    <p>共 ${data.docs.length} 篇文档</p>
+                </div>
+                ${docHtml}
+            `;
+        }
+
+        function toggleMobileMenu() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            const btn = document.querySelector('.mobile-menu-btn');
+
+            sidebar.classList.toggle('show');
+            overlay.classList.toggle('show');
+
+            if (sidebar.classList.contains('show')) {
+                btn.innerHTML = '&#x2715;';
+                document.body.style.overflow = 'hidden';
+            } else {
+                btn.innerHTML = '&#x2261;';
+                document.body.style.overflow = '';
+            }
+        }
+
+        function closeMobileMenu() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            const btn = document.querySelector('.mobile-menu-btn');
+
+            sidebar.classList.remove('show');
+            overlay.classList.remove('show');
+            btn.innerHTML = '&#x2261;';
+            document.body.style.overflow = '';
+        }
+
+        function displaySearchResults(results) {
+            const contentArea = document.getElementById('contentArea');
+
+            if (results.length === 0) {
+                contentArea.innerHTML = `
+                    <div class="stats-bar">
+                        <div class="stat-item">
+                            <div class="stat-info">
+                                <span class="stat-number">8</span>
+                                <span class="stat-label">问题分类</span>
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-info">
+                                <span class="stat-number">18</span>
+                                <span class="stat-label">篇文档</span>
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-info">
+                                <span class="stat-number">3</span>
+                                <span class="stat-label">篇已完善</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content-header">
+                        <h2>搜索结果</h2>
+                        <p>未找到匹配的文档</p>
+                    </div>
+                    <div class="doc-item empty">
+                        <h4>没有找到相关文档</h4>
+                        <p>请尝试其他关键词搜索</p>
+                    </div>
+                `;
+                return;
+            }
+
+            const docHtml = results.map(doc => {
+                if (doc.empty) {
+                    return `
+                        <div class="doc-item empty search-highlight" data-title="${doc.title}">
+                            <h4>${doc.title}</h4>
+                            <p>分类: ${doc.category}</p>
+                            <a href="${doc.link}" class="doc-link">查看文档</a>
+                        </div>
+                    `;
+                } else {
+                    return `
+                        <div class="doc-item search-highlight" data-title="${doc.title}">
+                            <h4><a href="${doc.link}" target="_blank">${doc.title}</a></h4>
+                            <p>分类: ${doc.category}</p>
+                            <a href="${doc.link}" target="_blank" class="doc-link">查看文档</a>
+                        </div>
+                    `;
+                }
+            }).join('');
+
+            contentArea.innerHTML = `
+                <div class="stats-bar">
+                    <div class="stat-item">
+                        <div class="stat-info">
+                            <span class="stat-number">8</span>
+                            <span class="stat-label">问题分类</span>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-info">
+                            <span class="stat-number">18</span>
+                            <span class="stat-label">篇文档</span>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-info">
+                            <span class="stat-number">3</span>
+                            <span class="stat-label">篇已完善</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="content-header">
+                    <h2>搜索结果</h2>
+                    <p>找到 ${results.length} 篇相关文档</p>
+                </div>
+                ${docHtml}
+            `;
+        }
+    </script>
 
 </body>
 </html>
