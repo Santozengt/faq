@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>常见问题解答(FAQ):耳机/声音设备无法正常工作排查指南</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; background-color: #f5f7fa; color: #333; line-height: 1.6; }
+        
+        /* 面包屑导航 */
+        .breadcrumb { max-width: 1200px; margin: 20px auto 0; padding: 0 20px; font-size: 0.9rem; color: #6b7280; }
+        .breadcrumb a { color: #2563eb; text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
+
+        /* 主体布局 */
+        .main-wrapper { max-width: 1200px; margin: 20px auto 60px; padding: 0 20px; display: flex; gap: 30px; }
+        
+        /* 左侧侧边栏目录 */
+        .sidebar { width: 280px; background: white; border: 1px solid #e5e7eb; border-radius: 4px; padding: 20px; height: fit-content; position: sticky; top: 20px; }
+        .sidebar h4 { font-size: 1rem; margin-bottom: 15px; color: #111827; border-bottom: 1px solid #f3f4f6; padding-bottom: 8px; }
+        .sidebar ul { list-style: none; }
+        .sidebar li { margin-bottom: 10px; }
+        .sidebar a { display: block; color: #4b5563; text-decoration: none; font-size: 0.9rem; padding: 6px 10px; border-radius: 4px; }
+        .sidebar a:hover, .sidebar .active { background-color: #f3f4f6; color: #c7000b; font-weight: 500; }
+
+        /* 中间核心内容区 */
+        .content-area { flex: 1; background: white; border: 1px solid #e5e7eb; border-radius: 4px; padding: 40px; }
+        
+        /* 文章头部标题 */
+        .doc-header { border-bottom: 1px solid #e5e7eb; padding-bottom: 20px; margin-bottom: 30px; }
+        .doc-header h1 { font-size: 1.75rem; color: #111827; margin-bottom: 10px; }
+        .doc-meta { font-size: 0.85rem; color: #9ca3af; }
+        .doc-meta span { margin-right: 20px; }
+
+        /* 文章正文样式定义 */
+        .faq-block { margin-bottom: 35px; }
+        .faq-block h2 { font-size: 1.25rem; color: #1f2937; margin-bottom: 12px; display: flex; align-items: center; }
+        .faq-answer { font-size: 1rem; color: #374151; padding-left: 4px; }
+        .faq-answer ol, .faq-answer ul { padding-left: 20px; margin-top: 10px; }
+        .faq-answer li { margin-bottom: 8px; }
+
+        /* 提示框 */
+        .tip-box { background-color: #f0fdf4; border-left: 4px solid #22c55e; color: #166534; padding: 15px; margin: 25px 0 0 0; border-radius: 0 4px 4px 0; font-size: 0.95rem; }
+
+        /* 响应式适配 */
+        @media (max-width: 768px) {
+            .main-wrapper { flex-direction: column; }
+            .sidebar { width: 100%; position: relative; top: 0; }
+            .content-area { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="breadcrumb">
+        <a href="index.html">首页</a> &gt; <a href="index.html">迷你电脑常见问题FAQ</a> &gt; <span>声音设备无法正常工作排查</span>
+    </div>
+
+    <div class="main-wrapper">
+        
+        <aside class="sidebar">
+            <h4>本文目录</h4>
+            <ul>
+                <li><a href="#q-audio" class="active">问题表象</a></li>
+                <li><a href="#step1">第一步：检查设备状态</a></li>
+                <li><a href="#step2">第二步：检查物理连接</a></li>
+                <li><a href="#step3">第三步：检查驱动程序</a></li>
+            </ul>
+        </aside>
+
+        <main class="content-area">
+            <article>
+                <div class="doc-header">
+                    <h1>常见问题解答 (FAQ) — 耳机/声音设备无法正常工作排查指南</h1>
+                    <div class="doc-meta">
+                        <span>发布时间：2026-05-18</span>
+                        <span>文档级别：公开</span>
+                        <span>适用机型：标准主机设备</span>
+                    </div>
+                </div>
+
+                <div class="faq-block" id="q-audio">
+                    <h2>Q：耳机/麦克风连接电脑后没有声音，或者设备无法被系统识别，该怎么处理？</h2>
+                    <div class="faq-answer">
+                        <p><strong>A：</strong>当您的音频设备出现无声或未识别的情况时，请按照以下三个步骤进行初步的自检与排查：</p>
+                    </div>
+                </div>
+
+                <div class="faq-block" id="step1">
+                    <h2>第一步：检查设备状态</h2>
+                    <div class="faq-answer">
+                        <ul>
+                            <li><strong>定位图标：</strong>右键点击任务栏右下角的 音量图标 。</li>
+                            <li><strong>进入设置：</strong>在弹出的菜单中选择 “打开声音设置” 或 “播放设备” （根据系统版本有所不同）。</li>
+                            <li><strong>确认状态：</strong>在录制或播放设备列表中，观察是否有相关设备显示为 “已禁用” 。</li>
+                            <li><strong>开启设备：</strong>若发现有被禁用的设备，请右键点击该设备，并选择 “启用” 。</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="faq-block" id="step2">
+                    <h2>第二步：检查物理连接</h2>
+                    <div class="faq-answer">
+                        <ul>
+                            <li><strong>对比列表：</strong>请观察并对比耳机 未插入 和 已插入 时，系统设备列表是否有所变化。</li>
+                            <li><strong>重新插拔：</strong>
+                                <ul>
+                                    <li>若列表完全无变化：说明电脑底层尚未检测到硬件接入。</li>
+                                    <li><strong>操作建议：</strong>请重新拔插 3.5mm 音频接口，插入时请 稍用力推到底，确保插头与电脑接口完全接触。</li>
+                                </ul>
+                            </li>
+                            <li><strong>完成测试：</strong>完成插拔后，请再次测试耳机功能是否恢复正常。</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="faq-block" id="step3">
+                    <h2>第三步：检查驱动程序（如问题仍未解决）</h2>
+                    <div class="faq-answer">
+                        <p>若经历前两步排查后设备依然无法工作，可能与系统驱动相关，请协助技术人员提取以下信息：</p>
+                        <ul>
+                            <li><strong>打开管理器：</strong>右键点击任务栏的 Windows 徽标（开始按钮），在弹出的快捷菜单中选择 “设备管理器” 。</li>
+                            <li><strong>展开音频项：</strong>在设备管理器窗口中，找到并点击展开 “声音、视频和游戏控制器” 这一项。</li>
+                            <li><strong>反馈技术支持：</strong>请将展开后的 完整列表内容进行截图，并将图片发送给我们。技术人员将会根据驱动状态为您做进一步的深度分析。</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="tip-box">
+                    <strong>💡 重要提示：</strong>请注意：在您尝试完上述排查步骤后，请务必将您的测试结果反馈告知我们，以便技术人员能够根据您的实际情况，为您提供针对性的下一步解决方案。
+                </div>
+
+            </article>
+        </main>
+    </div>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    const id = entry.target.getAttribute('id');
+                    const link = document.querySelector(`.sidebar a[href="#${id}"]`);
+                    if (link && entry.intersectionRatio > 0) {
+                        document.querySelectorAll('.sidebar a').forEach(a => a.classList.remove('active'));
+                        link.classList.add('active');
+                    }
+                });
+            });
+            document.querySelectorAll('.faq-block').forEach(section => observer.observe(section));
+        });
+    </script>
+</body>
+</html>
